@@ -8,7 +8,8 @@ class Pegawai:
         self.nomor_hp = nomor_hp
         self.alamat = alamat
         self.divisi_id = divisi_id
-
+    
+    @classmethod
     def create_table(cls):
         conn = create_connection()
         cursor = conn.cursor()
@@ -29,4 +30,14 @@ class Pegawai:
                 FOREIGN KEY (divisi_id) REFERENCES divisi(id)
             )
         """)
+        conn.close()
+
+    def store_pegawai(self):
+        conn = create_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO pegawai (nomor_pegawai, nama, email, nomor_hp, alamat, divisi_id)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (self.nomor_pegawai, self.nama, self.email, self.nomor_hp, self.alamat, self.divisi_id))
+        conn.commit()
         conn.close()
