@@ -60,4 +60,12 @@ class Pegawai:
         conn.close()
         return result
     
-    
+    @classmethod
+    def update(cls, nomor_pegawai, data):
+        conn = create_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE pegawai SET nama=%s, email=%s, nomor_hp=%s, alamat=%s, divisi_id=%s WHERE nomor_pegawai=%s
+        """, (data['nama'], data['email'], data['nomor_hp'], data['alamat'], data['divisi_id'], nomor_pegawai))
+        conn.commit()
+        conn.close()

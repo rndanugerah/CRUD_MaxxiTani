@@ -25,3 +25,14 @@ def get_pegawai_detail(nomor_pegawai):
         return jsonify(pegawai), 200
     else:
         return jsonify({'error': 'Nomor pegawai not found'}), 404
+
+@pegawai_bp.route('/', methods=['PUT'])
+def update_pegawai():
+    data = request.json
+    nomor_pegawai = data['nomor_pegawai']
+    existing_pegawai = Pegawai.get_by_nomor_pegawai(nomor_pegawai)
+    if existing_pegawai:
+        Pegawai.update(nomor_pegawai, data)
+        return jsonify({'message': 'Data pegawai updated successfully'}), 200
+    else:
+        return jsonify({'error': 'Nomor pegawai not found'}), 404
