@@ -41,3 +41,23 @@ class Pegawai:
         """, (self.nomor_pegawai, self.nama, self.email, self.nomor_hp, self.alamat, self.divisi_id))
         conn.commit()
         conn.close()
+
+    @classmethod
+    def get_all(cls):
+        conn = create_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM pegawai ORDER BY nama ASC")
+        result = cursor.fetchall()
+        conn.close()
+        return result
+    
+    @classmethod
+    def get_by_nomor_pegawai(cls, nomor_pegawai):
+        conn = create_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM pegawai WHERE nomor_pegawai = %s", (nomor_pegawai,))
+        result = cursor.fetchone()
+        conn.close()
+        return result
+    
+    
