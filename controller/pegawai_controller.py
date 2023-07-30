@@ -36,3 +36,14 @@ def update_pegawai():
         return jsonify({'message': 'Data pegawai updated successfully'}), 200
     else:
         return jsonify({'error': 'Nomor pegawai not found'}), 404
+    
+@pegawai_bp.route('/', methods=['DELETE'])
+def delete_pegawai():
+    data = request.json
+    nomor_pegawai = data['nomor_pegawai']
+    existing_pegawai = Pegawai.get_by_nomor_pegawai(nomor_pegawai)
+    if existing_pegawai:
+        Pegawai.delete(nomor_pegawai)
+        return jsonify({'message': 'Data pegawai deleted successfully'}), 200
+    else:
+        return jsonify({'error': 'Nomor pegawai not found'}), 404

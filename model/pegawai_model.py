@@ -69,3 +69,11 @@ class Pegawai:
         """, (data['nama'], data['email'], data['nomor_hp'], data['alamat'], data['divisi_id'], nomor_pegawai))
         conn.commit()
         conn.close()
+    
+    @classmethod
+    def delete(cls, nomor_pegawai):
+        conn = create_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM pegawai WHERE nomor_pegawai = %s", (nomor_pegawai,))
+        conn.commit()
+        conn.close()
