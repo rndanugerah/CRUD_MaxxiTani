@@ -47,3 +47,11 @@ def delete_pegawai():
         return jsonify({'message': 'Data pegawai deleted successfully'}), 200
     else:
         return jsonify({'error': 'Nomor pegawai not found'}), 404
+    
+@pegawai_bp.route('/divisi/<int:id_divisi>', methods=['GET'])
+def get_pegawai_by_divisi(id_divisi):
+    pegawai_list = Pegawai.get_by_divisi(id_divisi)
+    if pegawai_list:
+        return jsonify(pegawai_list), 200
+    else:
+        return jsonify({'error': 'Nomor divisi not found'}), 404
